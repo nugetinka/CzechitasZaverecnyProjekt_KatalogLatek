@@ -4,7 +4,7 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            Console.WriteLine("Tady bude vznikat můj závěrený projekt z C# 2 - Czechitas. :)");
         }
     }
 }
