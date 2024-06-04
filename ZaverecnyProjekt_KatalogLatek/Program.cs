@@ -7,9 +7,9 @@
             KatalogLatek katalog = new KatalogLatek();
 
             // Počáteční přidání látek
-            katalog.PridejLatku(new Softshell(1, "Softshell červený", "červená", "jarní softshell", "100% polyester", 260, 199, 10, true, 8000));
-            katalog.PridejLatku(new BavlnenePlatno(2, "Plátno s pruhy", "bílá", "popelín", "100% bavlna", 120, 99, 5, false, 3));
-            katalog.PridejLatku(new Uplet(3, "Úplet s jednorožci", "vícebarvná", "úplet", "95% bavlna, 5% elastan", 160, 199, 12, true, 5));
+            katalog.PridejLatku(new Softshell("Softshell červený", Latka.EBarva.Červená, "jarní softshell", "100% polyester", 260, 199, 10, true, 8000));
+            katalog.PridejLatku(new BavlnenePlatno("Plátno s pruhy", Latka.EBarva.Bílá, "popelín", "100% bavlna", 120, 99, 5, false, 3));
+            katalog.PridejLatku(new Uplet("Úplet s jednorožci", Latka.EBarva.Vícebarevná, "úplet", "95% bavlna, 5% elastan", 160, 199, 12, true, 5));
 
             // Uživatelské rozhraní
             bool ukoncitProgram = false;
@@ -35,9 +35,17 @@
                     case 4:
                         katalog.VypisInformaceOLatce();
                         break;
-                    case 5: // potřebuje doladit
+                    case 5:
+                        Console.WriteLine("Zadejte ID/kód produktu, který má být odstraněn.");
                         bool platnyKodProduktu = int.TryParse(Console.ReadLine(), out int kodProduktu);
-                        katalog.OdeberLatku(kodProduktu);
+                        if (platnyKodProduktu)
+                        {
+                            katalog.OdeberLatku(kodProduktu);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Neplatný kód produktu.");
+                        }
                         break;
                     case 6:
                         ukoncitProgram = true;

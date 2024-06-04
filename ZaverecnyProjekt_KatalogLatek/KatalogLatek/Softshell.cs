@@ -2,18 +2,18 @@
 {
     public class Softshell : Latka
     {
-        public int _vodniSloupec { get; private set; } 
+        public int VodniSloupec { get; private set; } 
 
-        public Softshell(int id, string nazev, string barva, string kategorie, string slozeni, double gramaz, double cena, double zasoba, bool certifikat, int vodniSloupec)
-            : base(id, nazev, barva, kategorie, slozeni, gramaz, cena, zasoba, certifikat)
+        public Softshell(string nazev, EBarva barva, string kategorie, string slozeni, double gramaz, double cena, double zasoba, bool certifikat, int vodniSloupec)
+            : base(nazev, barva, kategorie, slozeni, gramaz, cena, zasoba, certifikat)
         {
-            _vodniSloupec = vodniSloupec;
+            VodniSloupec = vodniSloupec;
         }
 
         public override void VypisInformaceOLatce()
         {
             base.VypisInformaceOLatce();
-            Console.WriteLine($"Vodní sloupec: {_vodniSloupec} mm");
+            Console.WriteLine($"Vodní sloupec: {VodniSloupec} mm");
             Console.WriteLine();
         }
     }

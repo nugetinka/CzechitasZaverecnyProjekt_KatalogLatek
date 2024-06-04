@@ -2,24 +2,24 @@
 {
     public class KatalogLatek
     {
-        public List<Latka> _latky { get; init; }
+        public List<Latka> Latky { get; init; }
 
         public KatalogLatek()
         {
-            _latky = new List<Latka>();
+            Latky = new List<Latka>();
         }
 
         public void PridejLatku(Latka latka)
         {
-            _latky.Add(latka);
+            Latky.Add(latka);
         }
 
         public void OdeberLatku(int kodProduktu)
         {
-            var latkaKOdstraneni = _latky.FirstOrDefault(latka => latka._id == kodProduktu);
+            var latkaKOdstraneni = Latky.FirstOrDefault(latka => latka.Id == kodProduktu);
             if (latkaKOdstraneni != null)
             {
-                _latky.Remove(latkaKOdstraneni);
+                Latky.Remove(latkaKOdstraneni);
                 Console.WriteLine($"Látka s kódem = {kodProduktu} byla odstraněna.");
             }
             else
@@ -30,7 +30,7 @@
 
         public void VypisInformaceOLatce()
         {
-            foreach (var latka in _latky)
+            foreach (var latka in Latky)
             {
                 latka.VypisInformaceOLatce();
             }

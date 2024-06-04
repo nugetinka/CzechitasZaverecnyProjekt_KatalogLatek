@@ -2,40 +2,51 @@
 {
     public abstract class Latka
     {
-        public int _id { get; private set; }
-        public string _nazev { get; private set; }
-        public string _barva { get; private set; }
-        public string _kategorie { get; private set; }
-        public string _slozeni { get; private set; }
-        public double _gramaz { get; private set; }
-        public double _cena { get; private set; }
-        public double _zasoba { get; private set; }
-        public bool _certifikat { get; private set; }
-
-        public Latka(int id, string nazev, string barva, string kategorie, string slozeni, double gramaz, double cena, double zasoba, bool certifikat)
+        private static int _idCounter;
+        public int Id { get; private set; }
+        public string Nazev { get; private set; }
+        public enum EBarva
         {
-            _id = id;
-            _nazev = nazev;
-            _barva = barva;
-            _kategorie = kategorie;
-            _slozeni = slozeni;
-            _gramaz = gramaz;
-            _cena = cena;
-            _zasoba = zasoba;
-            _certifikat = certifikat;
+            Bílá, Žlutá, Oranžová, Červená, Fialová, Modrá, Zelená, Hnědá, Černá, Vícebarevná
+        }
+        public EBarva Barva { get; private set; }
+        public string Kategorie { get; private set; }
+        public string Slozeni { get; private set; }
+        public double Gramaz { get; private set; }
+        public double Cena { get; private set; }
+        public double Zasoba { get; private set; }
+        public bool Certifikat { get; private set; }
+
+        public Latka(string nazev, EBarva barva, string kategorie, string slozeni, double gramaz, double cena, double zasoba, bool certifikat)
+        {
+            Id = ++_idCounter;
+            Nazev = nazev;
+            Barva = barva;
+            Kategorie = kategorie;
+            Slozeni = slozeni;
+            Gramaz = gramaz;
+            Cena = cena;
+            Zasoba = zasoba;
+            Certifikat = certifikat;
+        }
+
+        public override string ToString()
+        {
+            return
+                $"Kód produktu: {Id}," +
+                $"\nNázev: {Nazev}," +
+                $"\nBarva: {Barva}," +
+                $"\nKategorie: {Kategorie}," +
+                $"\nSložení: {Slozeni}," +
+                $"\nGramáž: {Gramaz} g/m2," +
+                $"\nCena: {Cena} Kč/m," +
+                $"\nZásoba: {Zasoba} m," +
+                $"\nCertifikát: {Certifikat}";
         }
 
         public virtual void VypisInformaceOLatce()
         {
-            Console.WriteLine($"Kód produktu: {_id}");
-            Console.WriteLine($"Název: {_nazev}");
-            Console.WriteLine($"Barva: {_barva}");
-            Console.WriteLine($"Kategorie: {_kategorie}");
-            Console.WriteLine($"Složení: {_slozeni}");
-            Console.WriteLine($"Gramáž: {_gramaz} g/m2");
-            Console.WriteLine($"Cena: {_cena} Kč/m");
-            Console.WriteLine($"Zásoba: {_zasoba} m");
-            Console.WriteLine($"Certifikát: {_certifikat}");
+            Console.WriteLine(ToString());
         }
     }
 }
