@@ -10,19 +10,17 @@
             Bílá, Žlutá, Oranžová, Červená, Fialová, Modrá, Zelená, Hnědá, Černá, Vícebarevná
         }
         public EBarva Barva { get; private set; }
-        public string Kategorie { get; private set; }
         public string Slozeni { get; private set; }
         public double Gramaz { get; private set; }
         public double Cena { get; private set; }
         public double Zasoba { get; private set; }
         public bool Certifikat { get; private set; }
 
-        public Latka(string nazev, EBarva barva, string kategorie, string slozeni, double gramaz, double cena, double zasoba, bool certifikat)
+        public Latka(string nazev, EBarva barva, string slozeni, double gramaz, double cena, double zasoba, bool certifikat)
         {
             Id = ++_idCounter;
             Nazev = nazev;
             Barva = barva;
-            Kategorie = kategorie;
             Slozeni = slozeni;
             Gramaz = gramaz;
             Cena = cena;
@@ -36,7 +34,6 @@
                 $"Kód produktu: {Id}," +
                 $"\nNázev: {Nazev}," +
                 $"\nBarva: {Barva}," +
-                $"\nKategorie: {Kategorie}," +
                 $"\nSložení: {Slozeni}," +
                 $"\nGramáž: {Gramaz} g/m2," +
                 $"\nCena: {Cena} Kč/m," +
@@ -48,5 +45,7 @@
         {
             Console.WriteLine(ToString());
         }
+
+        public abstract void PridejLatku();
     }
 }
