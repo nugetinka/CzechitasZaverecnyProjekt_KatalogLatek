@@ -58,13 +58,15 @@
 
                 switch (volba)
                 {
-                    case 1: // plátno
-
-                 
-                    //case 2: // softshell
-
-                    //case 3: // úplet
-
+                    case 1: // přidej plátno
+                        katalog.PridejLatkuUI(typeof(BavlnenePlatno));
+                        break;
+                    case 2: // přidej softshell
+                        katalog.PridejLatkuUI(typeof(Softshell));
+                        break;
+                    case 3: // přidej úplet
+                        katalog.PridejLatkuUI(typeof(Uplet));
+                        break;
                     case 4:
                         katalog.VypisInformaceOLatce();
                         break;

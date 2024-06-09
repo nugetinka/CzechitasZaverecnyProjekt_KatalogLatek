@@ -36,7 +36,7 @@
             }
         }
 
-        public void PridejLatku()
+        public void PridejLatkuUI(Type typLatky)
         {
             Console.WriteLine("Zadejte název: ");
             string nazev = Console.ReadLine();
@@ -45,6 +45,7 @@
             if (!Enum.TryParse(Console.ReadLine(), out Latka.EBarva barva))
             {
                 Console.WriteLine("Tato barva není v seznamu.");
+                return;
             }
 
             Console.WriteLine("Zadejte složení: ");
@@ -78,9 +79,69 @@
                 return;
             }
 
-            //KatalogLatek novaLatka = new KatalogLatek(nazev, barva, slozeni, gramaz, cena, zasoba, certifikat);
-            //PridejLatku(nazev, barva, slozeni, gramaz, cena, zasoba, certifikat);
-            //Console.WriteLine("Látka byla úspěšně přidána.");
+            object latka;
+            if (typLatky == typeof(BavlnenePlatno))
+            {
+                Console.WriteLine("Zadejte srážlivost: ");
+                if (!int.TryParse(Console.ReadLine(), out int srazlivost))
+                {
+                    Console.WriteLine("Zadaná neplatná srážlivost.");
+                    return;
+                }
+
+                Console.WriteLine("Zadejte kategorii: ");
+                if (!Enum.TryParse(Console.ReadLine(), out BavlnenePlatno.EKategorie kategorie))
+                {
+                    Console.WriteLine("Tato kategorie není v seznamu.");
+                    return;
+                }
+
+                latka = new BavlnenePlatno(nazev, barva, kategorie, slozeni, gramaz, cena, zasoba, certifikat, srazlivost);
+            }
+            else if (typLatky == typeof(Softshell))
+            {
+                Console.WriteLine("Zadejte vodní sloupec: ");
+                if (!int.TryParse(Console.ReadLine(), out int vodniSloupec))
+                {
+                    Console.WriteLine("Zadaná neplatná hodnota pro vodní sloupec.");
+                    return;
+                }
+
+                Console.WriteLine("Zadejte kategorii: ");
+                if (!Enum.TryParse(Console.ReadLine(), out Softshell.EKategorie kategorie))
+                {
+                    Console.WriteLine("Tato kategorie není v seznamu.");
+                    return;
+                }
+
+                latka = new Softshell(nazev, barva, kategorie, slozeni, gramaz, cena, zasoba, certifikat, vodniSloupec);
+            }
+            else if (typLatky == typeof(Uplet))
+            {
+                Console.WriteLine("Zadejte pružnost: ");
+                if (!int.TryParse(Console.ReadLine(), out int pruznost))
+                {
+                    Console.WriteLine("Zadaná neplatná hodnota pro pružnost.");
+                    return;
+                }
+
+                Console.WriteLine("Zadejte kategorii: ");
+                if (!Enum.TryParse(Console.ReadLine(), out Uplet.EKategorie kategorie))
+                {
+                    Console.WriteLine("Tato kategorie není v seznamu.");
+                    return;
+                }
+
+                latka = new Uplet(nazev, barva, kategorie, slozeni, gramaz, cena, zasoba, certifikat, pruznost);
+            }
+            else
+            {
+                Console.WriteLine("Neznámý typ látky");
+                return;
+            }
+
+            PridejLatku((Latka)latka);
+            Console.WriteLine($"{typLatky.Name} byla úspěšně přidána.");
         }
     }
 }

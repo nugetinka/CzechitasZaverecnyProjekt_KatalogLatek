@@ -22,11 +22,6 @@
             Console.WriteLine($"Vodní sloupec: {VodniSloupec} mm, \nKategorie: {Kategorie}");
             Console.WriteLine();
         }
-
-        public override void PridejLatku()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
 

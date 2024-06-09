@@ -45,7 +45,5 @@
         {
             Console.WriteLine(ToString());
         }
-
-        public abstract void PridejLatku();
     }
 }

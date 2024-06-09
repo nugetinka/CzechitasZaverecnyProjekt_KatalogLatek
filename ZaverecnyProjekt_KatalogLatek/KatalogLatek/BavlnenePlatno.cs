@@ -22,10 +22,5 @@
             Console.WriteLine($"Srážlivost: {Srazlivost} %, \nKategorie: {Kategorie} ");
             Console.WriteLine();
         }
-
-        public override void PridejLatku()
-        {
-            
-        }
     }
 }

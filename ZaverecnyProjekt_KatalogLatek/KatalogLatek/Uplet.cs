@@ -22,10 +22,5 @@
             Console.WriteLine($"Pružnost: {Pruznost} %, \nKategorie: {Kategorie}");
             Console.WriteLine();
         }
-
-        public override void PridejLatku()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
