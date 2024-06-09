@@ -38,59 +38,30 @@
 
         public void PridejLatkuUI(Type typLatky)
         {
-            Console.WriteLine("Zadejte název: ");
-            string nazev = Console.ReadLine();
+            string nazev = ZiskejStringOdUzivatele("Zadejte název: ");
 
-            Console.WriteLine("Zadejte barvu: ");
-            if (!Enum.TryParse(Console.ReadLine(), out Latka.EBarva barva))
+            if (!Enum.TryParse(ZiskejStringOdUzivatele("Zadejte barvu: "), out Latka.EBarva barva))
             {
                 Console.WriteLine("Tato barva není v seznamu.");
                 return;
             }
 
-            Console.WriteLine("Zadejte složení: ");
-            string slozeni = Console.ReadLine();
+            string slozeni = ZiskejStringOdUzivatele("Zadejte složení: ");
 
-            Console.WriteLine("Zadejte gramáž: ");
-            if (!double.TryParse(Console.ReadLine(), out double gramaz))
-            {
-                Console.WriteLine("Zadána neplatná gramáž");
-                return;
-            }
+            double gramaz = ZiskejDoubleOdUzivatele("Zadejte gramáž (g/m2): ");
 
-            Console.WriteLine("Zadejte cenu: ");
-            if (!double.TryParse(Console.ReadLine(), out double cena))
-            {
-                Console.WriteLine("Zadána neplatná cena");
-                return;
-            }
+            double cena = ZiskejDoubleOdUzivatele("Zadejte cenu (Kč/m): ");
 
-            Console.WriteLine("Zadejte zásobu: ");
-            if (!double.TryParse(Console.ReadLine(), out double zasoba))
-            {
-                Console.WriteLine("Zadána neplatná zásoba");
-                return;
-            }
+            double zasoba = ZiskejDoubleOdUzivatele("Zadejte zásobu (m): ");
 
-            Console.WriteLine("Je produkt certifikován (true/false)?");
-            if (!bool.TryParse(Console.ReadLine(), out bool certifikat))
-            {
-                Console.WriteLine("Zadána neplatná hodnota pro certifikát");
-                return;
-            }
-
+            bool certifikat = ZiskejBoolOdUzivatele("Je produkt certifikován (true/false)?");
+            
             object latka;
             if (typLatky == typeof(BavlnenePlatno))
             {
-                Console.WriteLine("Zadejte srážlivost: ");
-                if (!int.TryParse(Console.ReadLine(), out int srazlivost))
-                {
-                    Console.WriteLine("Zadaná neplatná srážlivost.");
-                    return;
-                }
+                int srazlivost = ZiskejIntOdUzivatele("Zadejte srážlivost (%): ");
 
-                Console.WriteLine("Zadejte kategorii: ");
-                if (!Enum.TryParse(Console.ReadLine(), out BavlnenePlatno.EKategorie kategorie))
+                if (!Enum.TryParse(ZiskejStringOdUzivatele("Zadejte kategorii: "), out BavlnenePlatno.EKategorie kategorie))
                 {
                     Console.WriteLine("Tato kategorie není v seznamu.");
                     return;
@@ -100,15 +71,9 @@
             }
             else if (typLatky == typeof(Softshell))
             {
-                Console.WriteLine("Zadejte vodní sloupec: ");
-                if (!int.TryParse(Console.ReadLine(), out int vodniSloupec))
-                {
-                    Console.WriteLine("Zadaná neplatná hodnota pro vodní sloupec.");
-                    return;
-                }
+                int vodniSloupec = ZiskejIntOdUzivatele("Zadejte vodní sloupec (mm): ");
 
-                Console.WriteLine("Zadejte kategorii: ");
-                if (!Enum.TryParse(Console.ReadLine(), out Softshell.EKategorie kategorie))
+                if (!Enum.TryParse(ZiskejStringOdUzivatele("Zadejte kategorii: "), out Softshell.EKategorie kategorie))
                 {
                     Console.WriteLine("Tato kategorie není v seznamu.");
                     return;
@@ -118,15 +83,9 @@
             }
             else if (typLatky == typeof(Uplet))
             {
-                Console.WriteLine("Zadejte pružnost: ");
-                if (!int.TryParse(Console.ReadLine(), out int pruznost))
-                {
-                    Console.WriteLine("Zadaná neplatná hodnota pro pružnost.");
-                    return;
-                }
+                int pruznost = ZiskejIntOdUzivatele("Zadejte pružnost (%): ");
 
-                Console.WriteLine("Zadejte kategorii: ");
-                if (!Enum.TryParse(Console.ReadLine(), out Uplet.EKategorie kategorie))
+                if (!Enum.TryParse(ZiskejStringOdUzivatele("Zadejte kategorii: "), out Uplet.EKategorie kategorie))
                 {
                     Console.WriteLine("Tato kategorie není v seznamu.");
                     return;
@@ -142,6 +101,45 @@
 
             PridejLatku((Latka)latka);
             Console.WriteLine($"{typLatky.Name} byla úspěšně přidána.");
+        }
+
+        private static string ZiskejStringOdUzivatele(string zadani)
+        {
+            Console.WriteLine(zadani);
+            return Console.ReadLine();
+        }
+
+        private static double ZiskejDoubleOdUzivatele(string zadani)
+        {
+            double hodnota;
+            Console.WriteLine(zadani);
+            while (!double.TryParse(Console.ReadLine(), out hodnota))
+            {
+                Console.WriteLine("Neplatná hodnota, zadejte znovu: ");
+            }
+            return hodnota;
+        }
+
+        private static int ZiskejIntOdUzivatele(string zadani)
+        {
+            int hodnota;
+            Console.WriteLine(zadani);
+            while(!int.TryParse(Console.ReadLine(), out hodnota))
+            {
+                Console.WriteLine("Neplatná hodnota, zadejte znovu: ");
+            }
+            return hodnota;
+        }
+
+        private static bool ZiskejBoolOdUzivatele(string zadani)
+        {
+            bool hodnota;
+            Console.WriteLine(zadani);
+            while (!bool.TryParse(Console.ReadLine(), out hodnota))
+            {
+                Console.WriteLine("Zadána neplatná hodnota pro certifikát.");
+            }
+            return hodnota;
         }
     }
 }
