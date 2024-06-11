@@ -9,41 +9,41 @@
             // Počáteční přidání látek
             // Softshell
             katalog.PridejLatku(new Softshell(
-                "Softshell červený",
-                Latka.EBarva.Červená,
-                Softshell.EKategorie.Jarní,
-                "100% polyester",
-                260,
-                199,
-                10,
-                true,
-                8000
+                nazev: "Softshell červený",
+                barva: Barva.Fialová,
+                kategorie: Softshell.Kategorie.Jarní,
+                slozeni: "100% polyester",
+                gramaz: 260,
+                cena: 199,
+                zasoba: 10,
+                certifikat: true,
+                vodniSloupec: 8000
             ));
 
             // Bavlněné plátno
             katalog.PridejLatku(new BavlnenePlatno(
-                "Plátno s pruhy",
-                Latka.EBarva.Bílá,
-                BavlnenePlatno.EKategorie.Popelín,
-                "100% bavlna",
-                120,
-                99,
-                5,
-                false,
-                3
+                nazev: "Plátno s pruhy",
+                barva: Barva.Bílá,
+                kategorie: BavlnenePlatno.Kategorie.Popelín,
+                slozeni: "100% bavlna",
+                gramaz: 120,
+                cena: 99,
+                zasoba: 5,
+                certifikat: false,
+                srazlivost: 3
             ));
 
             // Úplet
             katalog.PridejLatku(new Uplet(
-                "Úplet s jednorožci",
-                Latka.EBarva.Vícebarevná,
-                Uplet.EKategorie.Teplákovina,
-                "95% bavlna, 5% elastan",
-                160,
-                199,
-                12,
-                true,
-                5
+                nazev: "Úplet s jednorožci",
+                barva: Barva.Vícebarevná,
+                kategorie: Uplet.Kategorie.Teplákovina,
+                slozeni: "95% bavlna, 5% elastan",
+                gramaz: 160,
+                cena: 199,
+                zasoba: 12,
+                certifikat: true,
+                pruznost: 5
             ));
 
             // Uživatelské rozhraní
@@ -59,16 +59,16 @@
                 switch (volba)
                 {
                     case 1: // přidej plátno
-                        katalog.PridejLatkuUI(typeof(BavlnenePlatno));
+                        katalog.PridejLatku(KatalogLatek.TypLatky.Plátno);
                         break;
                     case 2: // přidej softshell
-                        katalog.PridejLatkuUI(typeof(Softshell));
+                        katalog.PridejLatku(KatalogLatek.TypLatky.Softshell);
                         break;
                     case 3: // přidej úplet
-                        katalog.PridejLatkuUI(typeof(Uplet));
+                        katalog.PridejLatku(KatalogLatek.TypLatky.Úplet);
                         break;
                     case 4:
-                        katalog.VypisInformaceOLatce();
+                        katalog.ToString();    
                         break;
                     case 5:
                         Console.WriteLine("Zadejte ID/kód produktu, který má být odstraněn.");

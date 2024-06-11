@@ -28,19 +28,21 @@
             }
         }
 
-        public void VypisInformaceOLatce()
+        public override string ToString()
         {
             foreach (var latka in Latky)
             {
-                latka.VypisInformaceOLatce();
+                Console.WriteLine(latka.ToString());
+                Console.WriteLine();
             }
+            return string.Empty;
         }
 
-        public void PridejLatkuUI(Type typLatky)
+        public void PridejLatku(TypLatky volba)
         {
             string nazev = ZiskejStringOdUzivatele("Zadejte název: ");
 
-            if (!Enum.TryParse(ZiskejStringOdUzivatele("Zadejte barvu: "), out Latka.EBarva barva))
+            if (!Enum.TryParse(ZiskejStringOdUzivatele("Zadejte barvu: "), out Barva barva))
             {
                 Console.WriteLine("Tato barva není v seznamu.");
                 return;
@@ -55,52 +57,54 @@
             double zasoba = ZiskejDoubleOdUzivatele("Zadejte zásobu (m): ");
 
             bool certifikat = ZiskejBoolOdUzivatele("Je produkt certifikován (true/false)?");
-            
-            object latka;
-            if (typLatky == typeof(BavlnenePlatno))
-            {
-                int srazlivost = ZiskejIntOdUzivatele("Zadejte srážlivost (%): ");
 
-                if (!Enum.TryParse(ZiskejStringOdUzivatele("Zadejte kategorii: "), out BavlnenePlatno.EKategorie kategorie))
-                {
-                    Console.WriteLine("Tato kategorie není v seznamu.");
+            Latka latka;
+            switch (volba)
+            {
+                case TypLatky.Plátno: 
+                    int srazlivost = ZiskejIntOdUzivatele("Zadejte srážlivost (%): ");
+
+                    if (!Enum.TryParse(ZiskejStringOdUzivatele("Zadejte kategorii: "), out BavlnenePlatno.Kategorie kategoriePlatno))
+                    {
+                        Console.WriteLine("Tato kategorie není v seznamu.");
+                        return;
+                    }
+                    latka = new BavlnenePlatno(nazev, barva, kategoriePlatno, slozeni, gramaz, cena, zasoba, certifikat, srazlivost);
+                    break;
+                case TypLatky.Softshell:
+                    int vodniSloupec = ZiskejIntOdUzivatele("Zadejte vodní sloupec (mm): ");
+
+                    if (!Enum.TryParse(ZiskejStringOdUzivatele("Zadejte kategorii: "), out Softshell.Kategorie kategorieSoftshell))
+                    {
+                        Console.WriteLine("Tato kategorie není v seznamu.");
+                        return;
+                    }
+                    latka = new Softshell(nazev, barva, kategorieSoftshell, slozeni, gramaz, cena, zasoba, certifikat, vodniSloupec);
+                    break;
+                case TypLatky.Úplet:
+                    int pruznost = ZiskejIntOdUzivatele("Zadejte pružnost (%): ");
+
+                    if (!Enum.TryParse(ZiskejStringOdUzivatele("Zadejte kategorii: "), out Uplet.Kategorie kategorieUplet))
+                    {
+                        Console.WriteLine("Tato kategorie není v seznamu.");
+                        return;
+                    }
+                    latka = new Uplet(nazev, barva, kategorieUplet, slozeni, gramaz, cena, zasoba, certifikat, pruznost);
+                    break;
+                default:
+                    Console.WriteLine("Neznámý typ látky");
                     return;
-                }
-
-                latka = new BavlnenePlatno(nazev, barva, kategorie, slozeni, gramaz, cena, zasoba, certifikat, srazlivost);
-            }
-            else if (typLatky == typeof(Softshell))
-            {
-                int vodniSloupec = ZiskejIntOdUzivatele("Zadejte vodní sloupec (mm): ");
-
-                if (!Enum.TryParse(ZiskejStringOdUzivatele("Zadejte kategorii: "), out Softshell.EKategorie kategorie))
-                {
-                    Console.WriteLine("Tato kategorie není v seznamu.");
-                    return;
-                }
-
-                latka = new Softshell(nazev, barva, kategorie, slozeni, gramaz, cena, zasoba, certifikat, vodniSloupec);
-            }
-            else if (typLatky == typeof(Uplet))
-            {
-                int pruznost = ZiskejIntOdUzivatele("Zadejte pružnost (%): ");
-
-                if (!Enum.TryParse(ZiskejStringOdUzivatele("Zadejte kategorii: "), out Uplet.EKategorie kategorie))
-                {
-                    Console.WriteLine("Tato kategorie není v seznamu.");
-                    return;
-                }
-
-                latka = new Uplet(nazev, barva, kategorie, slozeni, gramaz, cena, zasoba, certifikat, pruznost);
-            }
-            else
-            {
-                Console.WriteLine("Neznámý typ látky");
-                return;
             }
 
-            PridejLatku((Latka)latka);
-            Console.WriteLine($"{typLatky.Name} byla úspěšně přidána.");
+            PridejLatku(latka);
+            Console.WriteLine($"Látka byla úspěšně přidána.");
+        }
+
+        public enum TypLatky
+        {
+            Plátno,
+            Softshell,
+            Úplet
         }
 
         private static string ZiskejStringOdUzivatele(string zadani)
@@ -124,7 +128,7 @@
         {
             int hodnota;
             Console.WriteLine(zadani);
-            while(!int.TryParse(Console.ReadLine(), out hodnota))
+            while (!int.TryParse(Console.ReadLine(), out hodnota))
             {
                 Console.WriteLine("Neplatná hodnota, zadejte znovu: ");
             }

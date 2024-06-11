@@ -3,24 +3,27 @@
     public class BavlnenePlatno : Latka
     {
         public int Srazlivost { get; private set; }
-        public enum EKategorie
+        public enum Kategorie
         {
-            Plátno, Popelín, Košilovina, Kanfas
+            Plátno, 
+            Popelín, 
+            Košilovina, 
+            Kanfas
         }
-        public EKategorie Kategorie { get; private set; }
+        public Kategorie KategoriePlatno { get; private set; }
 
-        public BavlnenePlatno(string nazev, EBarva barva, EKategorie kategorie, string slozeni, double gramaz, double cena, double zasoba, bool certifikat, int srazlivost)
+        public BavlnenePlatno(string nazev, Barva barva, Kategorie kategorie, string slozeni, double gramaz, double cena, double zasoba, bool certifikat, int srazlivost)
             : base(nazev, barva, slozeni, gramaz, cena, zasoba, certifikat)
         {
             Srazlivost = srazlivost;
-            Kategorie = kategorie;
+            KategoriePlatno = kategorie;
         }
 
-        public override void VypisInformaceOLatce()
+        public override string ToString()
         {
-            base.VypisInformaceOLatce();
-            Console.WriteLine($"Srážlivost: {Srazlivost} %, \nKategorie: {Kategorie} ");
-            Console.WriteLine();
+            return base.ToString() +
+            $"\nSrážlivost: {Srazlivost} %, " +
+            $"\nKategorie: {KategoriePlatno}";
         }
     }
 }

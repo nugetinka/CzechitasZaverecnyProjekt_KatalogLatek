@@ -3,24 +3,26 @@
     public class Uplet : Latka
     {
         public int Pruznost { get; private set; }
-        public enum EKategorie
+        public enum Kategorie
         {
-            Úplet, Náplet, Teplákovina
+            Úplet, 
+            Náplet, 
+            Teplákovina
         }
-        public EKategorie Kategorie { get; private set; }
+        public Kategorie KategorieUplet { get; private set; }
 
-        public Uplet(string nazev, EBarva barva, EKategorie kategorie, string slozeni, double gramaz, double cena, double zasoba, bool certifikat, int pruznost)
+        public Uplet(string nazev, Barva barva, Kategorie kategorie, string slozeni, double gramaz, double cena, double zasoba, bool certifikat, int pruznost)
             : base(nazev, barva, slozeni, gramaz, cena, zasoba, certifikat)
         {
             Pruznost = pruznost;
-            Kategorie = kategorie;
+            KategorieUplet = kategorie;
         }
 
-        public override void VypisInformaceOLatce()
+        public override string ToString()
         {
-            base.VypisInformaceOLatce();
-            Console.WriteLine($"Pružnost: {Pruznost} %, \nKategorie: {Kategorie}");
-            Console.WriteLine();
+            return base.ToString() +
+            $"\nPružnost: {Pruznost} %, " +
+            $"\nKategorie: {KategorieUplet}";
         }
     }
 }
