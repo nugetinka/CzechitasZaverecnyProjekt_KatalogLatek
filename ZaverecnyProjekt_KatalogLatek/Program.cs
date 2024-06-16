@@ -7,7 +7,7 @@
             KatalogLatek katalog = new KatalogLatek();
             Console.WriteLine();
 
-            ////Defaultní přidání látek
+            ////Defaultní přidání látek 
             //// Softshell
             //katalog.PridejLatku(new Softshell(
             //    nazev: "Softshell cerveny",

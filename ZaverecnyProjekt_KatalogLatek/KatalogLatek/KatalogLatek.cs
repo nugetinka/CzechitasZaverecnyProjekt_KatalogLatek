@@ -34,15 +34,16 @@ namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
             }
         }
 
-        public override string ToString()
-        {
-            foreach (var latka in Latky)
-            {
-                Console.WriteLine(latka.ToString());
-                Console.WriteLine();
-            }
-            return string.Empty;
-        }
+        // Asi tohle není nakonec potřeba
+        //public override string ToString()
+        //{
+        //    foreach (var latka in Latky)
+        //    {
+        //        Console.WriteLine(latka.ToString());
+        //        Console.WriteLine();
+        //    }
+        //    return string.Empty;
+        //}
 
         public void PridejLatku(TypLatky volba)
         {
