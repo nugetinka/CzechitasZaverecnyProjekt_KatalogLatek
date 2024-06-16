@@ -5,9 +5,9 @@
         public int Srazlivost { get; private set; }
         public enum Kategorie
         {
-            Plátno, 
-            Popelín, 
-            Košilovina, 
+            Platno,
+            Popelin,
+            Kosilovina,
             Kanfas
         }
         public Kategorie KategoriePlatno { get; private set; }
@@ -22,7 +22,7 @@
         public override string ToString()
         {
             return base.ToString() +
-            $"\nSrážlivost: {Srazlivost} %, " +
+            $"\nSrazlivost: {Srazlivost} %, " +
             $"\nKategorie: {KategoriePlatno}";
         }
     }

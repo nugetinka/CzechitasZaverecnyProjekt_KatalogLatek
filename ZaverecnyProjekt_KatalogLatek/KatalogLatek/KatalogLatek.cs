@@ -1,8 +1,10 @@
-﻿namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
+﻿using System.Data;
+
+namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
 {
     public class KatalogLatek
     {
-        public List<Latka> Latky { get; init; }
+        public List<Latka> Latky { get; set; }
 
         public KatalogLatek()
         {
@@ -11,7 +13,10 @@
 
         public void PridejLatku(Latka latka)
         {
+            // Přidání látky do seznamu v paměti
             Latky.Add(latka);
+            // Ulož seznam do souboru
+            UlozKatalogLatek();
         }
 
         public void OdeberLatku(int kodProduktu)
@@ -21,6 +26,7 @@
             {
                 Latky.Remove(latkaKOdstraneni);
                 Console.WriteLine($"Látka s kódem = {kodProduktu} byla odstraněna.");
+                UlozKatalogLatek();
             }
             else
             {
@@ -61,7 +67,7 @@
             Latka latka;
             switch (volba)
             {
-                case TypLatky.Plátno: 
+                case TypLatky.Platno:
                     int srazlivost = ZiskejIntOdUzivatele("Zadejte srážlivost (%): ");
 
                     if (!Enum.TryParse(ZiskejStringOdUzivatele("Zadejte kategorii: "), out BavlnenePlatno.Kategorie kategoriePlatno))
@@ -81,7 +87,7 @@
                     }
                     latka = new Softshell(nazev, barva, kategorieSoftshell, slozeni, gramaz, cena, zasoba, certifikat, vodniSloupec);
                     break;
-                case TypLatky.Úplet:
+                case TypLatky.Uplet:
                     int pruznost = ZiskejIntOdUzivatele("Zadejte pružnost (%): ");
 
                     if (!Enum.TryParse(ZiskejStringOdUzivatele("Zadejte kategorii: "), out Uplet.Kategorie kategorieUplet))
@@ -102,9 +108,9 @@
 
         public enum TypLatky
         {
-            Plátno,
+            Platno,
             Softshell,
-            Úplet
+            Uplet
         }
 
         private static string ZiskejStringOdUzivatele(string zadani)
@@ -144,6 +150,84 @@
                 Console.WriteLine("Zadána neplatná hodnota pro certifikát.");
             }
             return hodnota;
+        }
+
+        private string ZiskejCestuKeSlozce()
+        {
+            string cestaKApplicationData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            return Path.Combine(cestaKApplicationData, "KatalogLatek");
+        }
+
+        private string ZiskejCestaKSouboru()
+        {
+            string cestaKeKataloguLatek = ZiskejCestuKeSlozce();
+            return Path.Combine(cestaKeKataloguLatek, "katalogLatek.csv");
+        }
+
+        public void UlozKatalogLatek()
+        {
+            try
+            {
+                string cestaKeKataloguLatek = ZiskejCestuKeSlozce();
+                string cestaKCsvSouboru = ZiskejCestaKSouboru();
+
+                if (!Directory.Exists(cestaKeKataloguLatek))
+                {
+                    Directory.CreateDirectory(cestaKeKataloguLatek);
+                }
+
+                List<string> obsah = new List<string>();
+
+                // Pokud soubor již existuje, načteme stávající řádky do seznamu Latky
+                if (File.Exists(cestaKCsvSouboru))
+                {
+                    string[] precteneRadky = File.ReadAllLines(cestaKCsvSouboru);
+                    foreach (var radek in precteneRadky)
+                    {
+                        obsah.Add(radek);
+                    }
+                }
+
+                // Přidáme novou látku do seznamu
+                foreach (var latka in Latky)
+                {
+                    obsah.Add(latka.ToString());
+                }
+
+                File.WriteAllLines(cestaKCsvSouboru, obsah);
+                Console.WriteLine("Katalog byl úspěšně uložen do CSV souboru.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Katalog se nepodařilo uložit: {ex.Message}");
+            }
+        }
+
+        public void NactiKatalogLatek()
+        {
+            try
+            {
+                string cestaKCsvSouboru = ZiskejCestaKSouboru();
+
+                if (!File.Exists(cestaKCsvSouboru))
+                {
+                    Console.WriteLine("Soubor katalogLatek.csv neexistuje.");
+                    return;
+                }
+
+                string[] precteneRadky = File.ReadAllLines(cestaKCsvSouboru);
+                Latky.Clear();
+
+                foreach (var radek in precteneRadky)
+                {
+                    Console.WriteLine(radek);
+                }
+                Console.WriteLine("Katalog byl úspěšně načten z CSV souboru.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Katalog se nepodařilo načíst: {ex.Message}");
+            }
         }
     }
 }

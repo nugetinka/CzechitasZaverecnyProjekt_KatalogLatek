@@ -5,46 +5,47 @@
         public static void Main()
         {
             KatalogLatek katalog = new KatalogLatek();
+            Console.WriteLine();
 
-            // Počáteční přidání látek
-            // Softshell
-            katalog.PridejLatku(new Softshell(
-                nazev: "Softshell červený",
-                barva: Barva.Fialová,
-                kategorie: Softshell.Kategorie.Jarní,
-                slozeni: "100% polyester",
-                gramaz: 260,
-                cena: 199,
-                zasoba: 10,
-                certifikat: true,
-                vodniSloupec: 8000
-            ));
+            ////Defaultní přidání látek
+            //// Softshell
+            //katalog.PridejLatku(new Softshell(
+            //    nazev: "Softshell cerveny",
+            //    barva: Barva.Fialova,
+            //    kategorie: Softshell.Kategorie.Jarni,
+            //    slozeni: "100% polyester",
+            //    gramaz: 260,
+            //    cena: 199,
+            //    zasoba: 10,
+            //    certifikat: true,
+            //    vodniSloupec: 8000
+            //));
 
-            // Bavlněné plátno
-            katalog.PridejLatku(new BavlnenePlatno(
-                nazev: "Plátno s pruhy",
-                barva: Barva.Bílá,
-                kategorie: BavlnenePlatno.Kategorie.Popelín,
-                slozeni: "100% bavlna",
-                gramaz: 120,
-                cena: 99,
-                zasoba: 5,
-                certifikat: false,
-                srazlivost: 3
-            ));
+            //// Bavlněné plátno
+            //katalog.PridejLatku(new BavlnenePlatno(
+            //    nazev: "Platno s pruhy",
+            //    barva: Barva.Bila,
+            //    kategorie: BavlnenePlatno.Kategorie.Popelin,
+            //    slozeni: "100% bavlna",
+            //    gramaz: 120,
+            //    cena: 99,
+            //    zasoba: 5,
+            //    certifikat: false,
+            //    srazlivost: 3
+            //));
 
-            // Úplet
-            katalog.PridejLatku(new Uplet(
-                nazev: "Úplet s jednorožci",
-                barva: Barva.Vícebarevná,
-                kategorie: Uplet.Kategorie.Teplákovina,
-                slozeni: "95% bavlna, 5% elastan",
-                gramaz: 160,
-                cena: 199,
-                zasoba: 12,
-                certifikat: true,
-                pruznost: 5
-            ));
+            //// Úplet
+            //katalog.PridejLatku(new Uplet(
+            //    nazev: "Uplet s jednorozci",
+            //    barva: Barva.Vicebarevna,
+            //    kategorie: Uplet.Kategorie.Teplakovina,
+            //    slozeni: "95% bavlna, 5% elastan",
+            //    gramaz: 160,
+            //    cena: 199,
+            //    zasoba: 12,
+            //    certifikat: true,
+            //    pruznost: 5
+            //));
 
             // Uživatelské rozhraní
             bool ukoncitProgram = false;
@@ -59,16 +60,16 @@
                 switch (volba)
                 {
                     case 1: // přidej plátno
-                        katalog.PridejLatku(KatalogLatek.TypLatky.Plátno);
+                        katalog.PridejLatku(KatalogLatek.TypLatky.Platno);
                         break;
                     case 2: // přidej softshell
                         katalog.PridejLatku(KatalogLatek.TypLatky.Softshell);
                         break;
                     case 3: // přidej úplet
-                        katalog.PridejLatku(KatalogLatek.TypLatky.Úplet);
+                        katalog.PridejLatku(KatalogLatek.TypLatky.Uplet);
                         break;
-                    case 4:
-                        katalog.ToString();    
+                    case 4: // vypiš látky
+                        katalog.NactiKatalogLatek();
                         break;
                     case 5:
                         Console.WriteLine("Zadejte ID/kód produktu, který má být odstraněn.");
@@ -85,7 +86,7 @@
                     case 6:
                         ukoncitProgram = true;
                         break;
-                    case 7:
+                    default:
                         Console.WriteLine("Neplatný výběr, zadej volbu znovu: ");
                         break;
                 }

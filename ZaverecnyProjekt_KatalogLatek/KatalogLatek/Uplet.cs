@@ -5,9 +5,9 @@
         public int Pruznost { get; private set; }
         public enum Kategorie
         {
-            Úplet, 
-            Náplet, 
-            Teplákovina
+            Uplet,
+            Naplet,
+            Teplakovina
         }
         public Kategorie KategorieUplet { get; private set; }
 
@@ -21,7 +21,7 @@
         public override string ToString()
         {
             return base.ToString() +
-            $"\nPružnost: {Pruznost} %, " +
+            $"\nPruznost: {Pruznost} %, " +
             $"\nKategorie: {KategorieUplet}";
         }
     }

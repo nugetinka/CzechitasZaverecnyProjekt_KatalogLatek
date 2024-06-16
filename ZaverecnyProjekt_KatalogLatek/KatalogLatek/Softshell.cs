@@ -5,9 +5,9 @@
         public int VodniSloupec { get; private set; }
         public enum Kategorie
         {
-            Jarní, 
-            Letní, 
-            Zimní, 
+            Jarni, 
+            Letni, 
+            Zimni, 
             SFleecem
         }
         public Kategorie KategorieSoftshell { get; private set; }
@@ -22,7 +22,7 @@
         public override string ToString()
         {
             return base.ToString() +
-            $"\nVodní sloupec: {VodniSloupec} mm, " +
+            $"\nVodni sloupec: {VodniSloupec} mm, " +
             $"\nKategorie: {KategorieSoftshell}";
         }
     }

@@ -5,7 +5,7 @@ namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
     public abstract class Latka
     {
         private static int _idCounter;
-        public int Id { get; private set; }
+        public int Id { get; set; }
         public string Nazev { get; private set; }
         public Barva Barva { get; private set; }
         public string Slozeni { get; private set; }
@@ -29,14 +29,14 @@ namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
         public override string ToString()
         {
             return
-                $"Kód produktu: {Id}," +
-                $"\nNázev: {Nazev}," +
+                $"Kod produktu: {Id}," +
+                $"\nNazev: {Nazev}," +
                 $"\nBarva: {Barva}," +
-                $"\nSložení: {Slozeni}," +
-                $"\nGramáž: {Gramaz} g/m2," +
-                $"\nCena: {Cena} Kč/m," +
-                $"\nZásoba: {Zasoba} m," +
-                $"\nCertifikát: {(Certifikat ? "true" : "false")}";
-        }
+                $"\nSlozeni: {Slozeni}," +
+                $"\nGramaz: {Gramaz} g/m2," +
+                $"\nCena: {Cena} Kc/m," +
+                $"\nZasoba: {Zasoba} m," +
+                $"\nCertifikat: {(Certifikat ? "true" : "false")}";
+        }         
     }
 }
