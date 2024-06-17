@@ -1,6 +1,4 @@
-﻿using static ZaverecnyProjekt_KatalogLatek.KatalogLatek.Barva;
-
-namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
+﻿namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
 {
     public abstract class Latka
     {
@@ -40,6 +38,6 @@ namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
                 $"\nCena: {Cena} Kc/m," +
                 $"\nZasoba: {Zasoba} m," +
                 $"\nCertifikat: {(Certifikat ? "true" : "false")}";
-        }         
+        }
     }
 }

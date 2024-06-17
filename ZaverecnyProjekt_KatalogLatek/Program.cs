@@ -5,47 +5,67 @@
         public static void Main()
         {
             KatalogLatek katalog = new KatalogLatek();
+
+            // Načtení katalogu látek
+            List<Latka> prectenyKatalog = katalog.NactiKatalogLatek();
+
+            if (prectenyKatalog != null)
+            {
+                foreach (var latka in prectenyKatalog)
+                {
+                    Console.WriteLine(latka);
+                    Console.WriteLine(); // Oddělení látek mezi sebou
+                }
+            }
+            else
+            {
+                Console.WriteLine("Nelze pokračovat, katalog se nepodařilo načíst.");
+                return;
+            }
+
             Console.WriteLine();
 
-            //Defaultní přidání látek 
-            // Softshell
-            katalog.PridejLatku(new Softshell(
-                nazev: "Softshell cerveny",
-                barva: Barva.Fialova,
-                kategorie: Softshell.Kategorie.Jarni,
-                slozeni: "100% polyester",
-                gramaz: 260,
-                cena: 199,
-                zasoba: 10,
-                certifikat: true,
-                vodniSloupec: 8000
-            ));
+            Console.WriteLine();
 
-            // Bavlněné plátno
-            katalog.PridejLatku(new BavlnenePlatno(
-                nazev: "Platno s pruhy",
-                barva: Barva.Bila,
-                kategorie: BavlnenePlatno.Kategorie.Popelin,
-                slozeni: "100% bavlna",
-                gramaz: 120,
-                cena: 99,
-                zasoba: 5,
-                certifikat: false,
-                srazlivost: 3
-            ));
+            ////Defaultní přidání látek 
+            //// Softshell
+            //katalog.PridejLatku(new Softshell(
+            //    nazev: "Softshell cerveny",
+            //    barva: Barva.Fialova,
+            //    kategorie: Softshell.Kategorie.Jarni,
+            //    slozeni: "100% polyester",
+            //    gramaz: 260,
+            //    cena: 199,
+            //    zasoba: 10,
+            //    certifikat: true,
+            //    vodniSloupec: 8000
+            //));
 
-            // Úplet
-            katalog.PridejLatku(new Uplet(
-                nazev: "Uplet s jednorozci",
-                barva: Barva.Vicebarevna,
-                kategorie: Uplet.Kategorie.Teplakovina,
-                slozeni: "95% bavlna, 5% elastan",
-                gramaz: 160,
-                cena: 199,
-                zasoba: 12,
-                certifikat: true,
-                pruznost: 5
-            ));
+            //// Bavlněné plátno
+            //katalog.PridejLatku(new BavlnenePlatno(
+            //    nazev: "Platno s pruhy",
+            //    barva: Barva.Bila,
+            //    kategorie: BavlnenePlatno.Kategorie.Popelin,
+            //    slozeni: "100% bavlna",
+            //    gramaz: 120,
+            //    cena: 99,
+            //    zasoba: 5,
+            //    certifikat: false,
+            //    srazlivost: 3
+            //));
+
+            //// Úplet
+            //katalog.PridejLatku(new Uplet(
+            //    nazev: "Uplet s jednorozci",
+            //    barva: Barva.Vicebarevna,
+            //    kategorie: Uplet.Kategorie.Teplakovina,
+            //    slozeni: "95% bavlna, 5% elastan",
+            //    gramaz: 160,
+            //    cena: 199,
+            //    zasoba: 12,
+            //    certifikat: true,
+            //    pruznost: 5
+            //));
 
             // Uživatelské rozhraní
             bool ukoncitProgram = false;

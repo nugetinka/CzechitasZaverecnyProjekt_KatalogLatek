@@ -13,7 +13,6 @@ namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
 
         public void PridejLatku(Latka latka)
         {
-            // Přidání látky do seznamu v paměti
             Latky.Add(latka);
         }
 
@@ -156,7 +155,7 @@ namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
             return Path.Combine(cestaKApplicationData, "KatalogLatek");
         }
 
-        private string ZiskejCestaKSouboru()
+        private string ZiskejCestuKSouboru()
         {
             string cestaKeKataloguLatek = ZiskejCestuKeSlozce();
             return Path.Combine(cestaKeKataloguLatek, "katalogLatek.xml");
@@ -170,7 +169,7 @@ namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
                 XmlSerializer serializer = new XmlSerializer(typeof(List<Latka>), new Type[] {typeof(BavlnenePlatno), typeof(Softshell), typeof(Uplet)});
 
                 string cestaKeSlozce = ZiskejCestuKeSlozce();
-                string cestaKXmlSouboru = ZiskejCestaKSouboru();
+                string cestaKXmlSouboru = ZiskejCestuKSouboru();
 
                 if (!Directory.Exists(cestaKeSlozce))
                 {
@@ -191,16 +190,33 @@ namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
             }
         }
 
-        //public void NactiKatalogLatek()
-        //{
-        //    try
-        //    {
-                
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine($"Katalog se nepodařilo načíst: {ex.Message}");
-        //    }
-        //}
+        public List<Latka> NactiKatalogLatek()
+        {
+            List<Latka> prectenySeznam = null;
+            try
+            {
+                string cestaKXmlSouboru = ZiskejCestuKSouboru();
+
+                if (!File.Exists(cestaKXmlSouboru))
+                {
+                    Console.WriteLine($"Soubor \"katalogLatek.xml\" neexistuje.");
+                }
+
+                XmlSerializer serializer = new XmlSerializer(typeof(List<Latka>), new Type[] { typeof(BavlnenePlatno), typeof(Softshell), typeof(Uplet) });
+
+                using (StreamReader streamReader = new StreamReader(cestaKXmlSouboru))
+                {
+                    prectenySeznam = serializer.Deserialize(streamReader) as List<Latka>;
+                }
+                Console.WriteLine("Katalog byl úspěšně načten z XML souboru");
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Katalog se nepodařilo načíst: {ex.Message}");
+            }
+
+            return prectenySeznam;
+        }
     }
 }
