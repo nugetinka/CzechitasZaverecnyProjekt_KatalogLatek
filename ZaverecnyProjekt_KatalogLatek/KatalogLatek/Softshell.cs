@@ -1,16 +1,23 @@
-﻿namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
+﻿using System.Xml.Serialization;
+
+namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
 {
     public class Softshell : Latka
     {
-        public int VodniSloupec { get; private set; }
+        public int VodniSloupec { get; set; }
+        public Kategorie KategorieSoftshell { get; set; }
+
+        [XmlType("KategorieSoftshell")]
         public enum Kategorie
         {
-            Jarni, 
-            Letni, 
-            Zimni, 
+            Jarni,
+            Letni,
+            Zimni,
             SFleecem
         }
-        public Kategorie KategorieSoftshell { get; private set; }
+
+        // Bezparametrový konstruktor
+        public Softshell() { }
 
         public Softshell(string nazev, Barva barva, Kategorie kategorie, string slozeni, double gramaz, double cena, double zasoba, bool certifikat, int vodniSloupec)
             : base(nazev, barva, slozeni, gramaz, cena, zasoba, certifikat)

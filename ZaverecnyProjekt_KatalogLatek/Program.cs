@@ -7,45 +7,45 @@
             KatalogLatek katalog = new KatalogLatek();
             Console.WriteLine();
 
-            ////Defaultní přidání látek 
-            //// Softshell
-            //katalog.PridejLatku(new Softshell(
-            //    nazev: "Softshell cerveny",
-            //    barva: Barva.Fialova,
-            //    kategorie: Softshell.Kategorie.Jarni,
-            //    slozeni: "100% polyester",
-            //    gramaz: 260,
-            //    cena: 199,
-            //    zasoba: 10,
-            //    certifikat: true,
-            //    vodniSloupec: 8000
-            //));
+            //Defaultní přidání látek 
+            // Softshell
+            katalog.PridejLatku(new Softshell(
+                nazev: "Softshell cerveny",
+                barva: Barva.Fialova,
+                kategorie: Softshell.Kategorie.Jarni,
+                slozeni: "100% polyester",
+                gramaz: 260,
+                cena: 199,
+                zasoba: 10,
+                certifikat: true,
+                vodniSloupec: 8000
+            ));
 
-            //// Bavlněné plátno
-            //katalog.PridejLatku(new BavlnenePlatno(
-            //    nazev: "Platno s pruhy",
-            //    barva: Barva.Bila,
-            //    kategorie: BavlnenePlatno.Kategorie.Popelin,
-            //    slozeni: "100% bavlna",
-            //    gramaz: 120,
-            //    cena: 99,
-            //    zasoba: 5,
-            //    certifikat: false,
-            //    srazlivost: 3
-            //));
+            // Bavlněné plátno
+            katalog.PridejLatku(new BavlnenePlatno(
+                nazev: "Platno s pruhy",
+                barva: Barva.Bila,
+                kategorie: BavlnenePlatno.Kategorie.Popelin,
+                slozeni: "100% bavlna",
+                gramaz: 120,
+                cena: 99,
+                zasoba: 5,
+                certifikat: false,
+                srazlivost: 3
+            ));
 
-            //// Úplet
-            //katalog.PridejLatku(new Uplet(
-            //    nazev: "Uplet s jednorozci",
-            //    barva: Barva.Vicebarevna,
-            //    kategorie: Uplet.Kategorie.Teplakovina,
-            //    slozeni: "95% bavlna, 5% elastan",
-            //    gramaz: 160,
-            //    cena: 199,
-            //    zasoba: 12,
-            //    certifikat: true,
-            //    pruznost: 5
-            //));
+            // Úplet
+            katalog.PridejLatku(new Uplet(
+                nazev: "Uplet s jednorozci",
+                barva: Barva.Vicebarevna,
+                kategorie: Uplet.Kategorie.Teplakovina,
+                slozeni: "95% bavlna, 5% elastan",
+                gramaz: 160,
+                cena: 199,
+                zasoba: 12,
+                certifikat: true,
+                pruznost: 5
+            ));
 
             // Uživatelské rozhraní
             bool ukoncitProgram = false;
@@ -69,7 +69,7 @@
                         katalog.PridejLatku(KatalogLatek.TypLatky.Uplet);
                         break;
                     case 4: // vypiš látky
-                        katalog.NactiKatalogLatek();
+                        katalog.ToString();
                         break;
                     case 5:
                         Console.WriteLine("Zadejte ID/kód produktu, který má být odstraněn.");
@@ -85,6 +85,7 @@
                         break;
                     case 6:
                         ukoncitProgram = true;
+                        katalog.UlozKatalogLatek();
                         break;
                     default:
                         Console.WriteLine("Neplatný výběr, zadej volbu znovu: ");

@@ -1,4 +1,4 @@
-﻿using System.Data;
+﻿using System.Xml.Serialization;
 
 namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
 {
@@ -15,8 +15,6 @@ namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
         {
             // Přidání látky do seznamu v paměti
             Latky.Add(latka);
-            // Ulož seznam do souboru
-            UlozKatalogLatek();
         }
 
         public void OdeberLatku(int kodProduktu)
@@ -34,16 +32,15 @@ namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
             }
         }
 
-        // Asi tohle není nakonec potřeba
-        //public override string ToString()
-        //{
-        //    foreach (var latka in Latky)
-        //    {
-        //        Console.WriteLine(latka.ToString());
-        //        Console.WriteLine();
-        //    }
-        //    return string.Empty;
-        //}
+        public override string ToString()
+        {
+            foreach (var latka in Latky)
+            {
+                Console.WriteLine(latka.ToString());
+                Console.WriteLine();
+            }
+            return string.Empty;
+        }
 
         public void PridejLatku(TypLatky volba)
         {
@@ -162,73 +159,48 @@ namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
         private string ZiskejCestaKSouboru()
         {
             string cestaKeKataloguLatek = ZiskejCestuKeSlozce();
-            return Path.Combine(cestaKeKataloguLatek, "katalogLatek.csv");
+            return Path.Combine(cestaKeKataloguLatek, "katalogLatek.xml");
         }
 
         public void UlozKatalogLatek()
         {
             try
             {
-                string cestaKeKataloguLatek = ZiskejCestuKeSlozce();
-                string cestaKCsvSouboru = ZiskejCestaKSouboru();
+                // Vytvoříme si XmlSerializer na typ List<Latka>
+                XmlSerializer serializer = new XmlSerializer(typeof(List<Latka>), new Type[] {typeof(BavlnenePlatno), typeof(Softshell), typeof(Uplet)});
 
-                if (!Directory.Exists(cestaKeKataloguLatek))
+                string cestaKeSlozce = ZiskejCestuKeSlozce();
+                string cestaKXmlSouboru = ZiskejCestaKSouboru();
+
+                if (!Directory.Exists(cestaKeSlozce))
                 {
-                    Directory.CreateDirectory(cestaKeKataloguLatek);
+                    Directory.CreateDirectory(cestaKeSlozce);
                 }
 
-                List<string> obsah = new List<string>();
-
-                // Pokud soubor již existuje, načteme stávající řádky do seznamu Latky
-                if (File.Exists(cestaKCsvSouboru))
+                // Vytvoříme stream, pomocí kterého budeme serializovat
+                using (StreamWriter streamWriter = new StreamWriter(cestaKXmlSouboru))
                 {
-                    string[] precteneRadky = File.ReadAllLines(cestaKCsvSouboru);
-                    foreach (var radek in precteneRadky)
-                    {
-                        obsah.Add(radek);
-                    }
+                    // Zavoláme metodu Serialize, kde je první parametr stream
+                    // Druhý parametr je objekt, který serializujeme
+                    serializer.Serialize(streamWriter, Latky);
                 }
-
-                // Přidáme novou látku do seznamu
-                foreach (var latka in Latky)
-                {
-                    obsah.Add(latka.ToString());
-                }
-
-                File.WriteAllLines(cestaKCsvSouboru, obsah);
-                Console.WriteLine("Katalog byl úspěšně uložen do CSV souboru.");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Katalog se nepodařilo uložit: {ex.Message}");
+                Console.WriteLine($"Katalog se nepodařilo uložit do XML souboru: {ex.Message}");
             }
         }
 
-        public void NactiKatalogLatek()
-        {
-            try
-            {
-                string cestaKCsvSouboru = ZiskejCestaKSouboru();
-
-                if (!File.Exists(cestaKCsvSouboru))
-                {
-                    Console.WriteLine("Soubor katalogLatek.csv neexistuje.");
-                    return;
-                }
-
-                string[] precteneRadky = File.ReadAllLines(cestaKCsvSouboru);
-                Latky.Clear();
-
-                foreach (var radek in precteneRadky)
-                {
-                    Console.WriteLine(radek);
-                }
-                Console.WriteLine("Katalog byl úspěšně načten z CSV souboru.");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Katalog se nepodařilo načíst: {ex.Message}");
-            }
-        }
+        //public void NactiKatalogLatek()
+        //{
+        //    try
+        //    {
+                
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine($"Katalog se nepodařilo načíst: {ex.Message}");
+        //    }
+        //}
     }
 }

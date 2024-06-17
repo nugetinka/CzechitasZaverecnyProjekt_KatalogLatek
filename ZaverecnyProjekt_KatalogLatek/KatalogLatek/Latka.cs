@@ -6,13 +6,16 @@ namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
     {
         private static int _idCounter;
         public int Id { get; set; }
-        public string Nazev { get; private set; }
-        public Barva Barva { get; private set; }
-        public string Slozeni { get; private set; }
-        public double Gramaz { get; private set; }
-        public double Cena { get; private set; }
-        public double Zasoba { get; private set; }
-        public bool Certifikat { get; private set; }
+        public string Nazev { get; set; }
+        public Barva Barva { get; set; }
+        public string Slozeni { get; set; }
+        public double Gramaz { get; set; }
+        public double Cena { get; set; }
+        public double Zasoba { get; set; }
+        public bool Certifikat { get; set; }
+
+        // Bezparametrový konstuktor
+        public Latka() { }
 
         public Latka(string nazev, Barva barva, string slozeni, double gramaz, double cena, double zasoba, bool certifikat)
         {

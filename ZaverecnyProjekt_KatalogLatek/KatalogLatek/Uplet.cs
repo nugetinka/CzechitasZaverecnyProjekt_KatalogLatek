@@ -1,15 +1,22 @@
-﻿namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
+﻿using System.Xml.Serialization;
+
+namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
 {
     public class Uplet : Latka
     {
-        public int Pruznost { get; private set; }
+        public int Pruznost { get; set; }
+        public Kategorie KategorieUplet { get; set; }
+
+        [XmlType("KategorieUplet")]
         public enum Kategorie
         {
             Uplet,
             Naplet,
             Teplakovina
         }
-        public Kategorie KategorieUplet { get; private set; }
+
+        // Bezparametrový konstruktor
+        public Uplet() { }
 
         public Uplet(string nazev, Barva barva, Kategorie kategorie, string slozeni, double gramaz, double cena, double zasoba, bool certifikat, int pruznost)
             : base(nazev, barva, slozeni, gramaz, cena, zasoba, certifikat)

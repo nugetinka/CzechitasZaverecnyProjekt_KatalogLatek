@@ -1,8 +1,13 @@
-﻿namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
+﻿using System.Xml.Serialization;
+
+namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
 {
     public class BavlnenePlatno : Latka
     {
-        public int Srazlivost { get; private set; }
+        public int Srazlivost { get; set; }
+        public Kategorie KategoriePlatno { get; set; }
+
+        [XmlType("KategoriePlatno")]
         public enum Kategorie
         {
             Platno,
@@ -10,7 +15,9 @@
             Kosilovina,
             Kanfas
         }
-        public Kategorie KategoriePlatno { get; private set; }
+
+        // Bezparametrový konstruktor
+        public BavlnenePlatno() { }
 
         public BavlnenePlatno(string nazev, Barva barva, Kategorie kategorie, string slozeni, double gramaz, double cena, double zasoba, bool certifikat, int srazlivost)
             : base(nazev, barva, slozeni, gramaz, cena, zasoba, certifikat)
