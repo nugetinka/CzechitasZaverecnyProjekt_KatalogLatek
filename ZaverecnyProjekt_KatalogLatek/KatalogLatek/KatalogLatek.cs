@@ -14,6 +14,7 @@ namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
         public void PridejLatku(Latka latka)
         {
             Latky.Add(latka);
+            UlozKatalogLatek();
         }
 
         public void OdeberLatku(int kodProduktu)
@@ -193,6 +194,7 @@ namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
         public List<Latka> NactiKatalogLatek()
         {
             List<Latka> prectenySeznam = null;
+
             try
             {
                 string cestaKXmlSouboru = ZiskejCestuKSouboru();

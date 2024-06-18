@@ -39,5 +39,10 @@
                 $"\nZasoba: {Zasoba} m," +
                 $"\nCertifikat: {(Certifikat ? "true" : "false")}";
         }
+
+        public static void NastavNavazujiciId(int maxId)
+        {
+            _idCounter = maxId;
+        }
     }
 }

@@ -14,16 +14,16 @@
                 foreach (var latka in prectenyKatalog)
                 {
                     Console.WriteLine(latka);
-                    Console.WriteLine(); // Oddělení látek mezi sebou
+                    Console.WriteLine(); 
                 }
+
+                // Nastavení statického Id na maximální Id z přečteného katalogu
+                Latka.NastavNavazujiciId(prectenyKatalog.Max(l => l.Id));
             }
             else
             {
-                Console.WriteLine("Nelze pokračovat, katalog se nepodařilo načíst.");
-                return;
+                Console.WriteLine("Katalog látek prozatím neobsahuje žádný záznam.");
             }
-
-            Console.WriteLine();
 
             Console.WriteLine();
 
