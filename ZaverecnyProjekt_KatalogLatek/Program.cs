@@ -1,4 +1,5 @@
 ﻿namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
+
 {
     public class Program
     {
@@ -9,12 +10,13 @@
             // Načtení katalogu látek
             List<Latka> prectenyKatalog = katalog.NactiKatalogLatek();
 
-            if (prectenyKatalog != null)
+            if (prectenyKatalog != null && prectenyKatalog.Any())
             {
+                // Tato část kodu se vykoná jen pokud prectenyKatalog není null a obsahuje alespon jeden prvek
                 foreach (var latka in prectenyKatalog)
                 {
                     Console.WriteLine(latka);
-                    Console.WriteLine(); 
+                    Console.WriteLine();
                 }
 
                 // Nastavení statického Id na maximální Id z přečteného katalogu
@@ -22,50 +24,11 @@
             }
             else
             {
-                Console.WriteLine("Katalog látek prozatím neobsahuje žádný záznam.");
+                // Naseedování defaultních dat
+                NaseedujDefaultniData(katalog);
             }
 
             Console.WriteLine();
-
-            ////Defaultní přidání látek 
-            //// Softshell
-            //katalog.PridejLatku(new Softshell(
-            //    nazev: "Softshell cerveny",
-            //    barva: Barva.Fialova,
-            //    kategorie: Softshell.Kategorie.Jarni,
-            //    slozeni: "100% polyester",
-            //    gramaz: 260,
-            //    cena: 199,
-            //    zasoba: 10,
-            //    certifikat: true,
-            //    vodniSloupec: 8000
-            //));
-
-            //// Bavlněné plátno
-            //katalog.PridejLatku(new BavlnenePlatno(
-            //    nazev: "Platno s pruhy",
-            //    barva: Barva.Bila,
-            //    kategorie: BavlnenePlatno.Kategorie.Popelin,
-            //    slozeni: "100% bavlna",
-            //    gramaz: 120,
-            //    cena: 99,
-            //    zasoba: 5,
-            //    certifikat: false,
-            //    srazlivost: 3
-            //));
-
-            //// Úplet
-            //katalog.PridejLatku(new Uplet(
-            //    nazev: "Uplet s jednorozci",
-            //    barva: Barva.Vicebarevna,
-            //    kategorie: Uplet.Kategorie.Teplakovina,
-            //    slozeni: "95% bavlna, 5% elastan",
-            //    gramaz: 160,
-            //    cena: 199,
-            //    zasoba: 12,
-            //    certifikat: true,
-            //    pruznost: 5
-            //));
 
             // Uživatelské rozhraní
             bool ukoncitProgram = false;
@@ -81,7 +44,7 @@
                 {
                     case 1: // přidej plátno
                         katalog.PridejLatku(KatalogLatek.TypLatky.Platno);
-                        break;
+                        break; ;
                     case 2: // přidej softshell
                         katalog.PridejLatku(KatalogLatek.TypLatky.Softshell);
                         break;
@@ -92,16 +55,8 @@
                         katalog.ToString();
                         break;
                     case 5:
-                        Console.WriteLine("Zadejte ID/kód produktu, který má být odstraněn.");
-                        bool platnyKodProduktu = int.TryParse(Console.ReadLine(), out int kodProduktu);
-                        if (platnyKodProduktu)
-                        {
-                            katalog.OdeberLatku(kodProduktu);
-                        }
-                        else
-                        {
-                            Console.WriteLine("Neplatný kód produktu.");
-                        }
+                        int kodProduktu = KatalogLatek.ZiskejIntOdUzivatele("Zadejte ID/kód produktu, který má být odstraněn." );
+                        katalog.OdeberLatku(kodProduktu);
                         break;
                     case 6:
                         ukoncitProgram = true;
@@ -124,6 +79,53 @@
             Console.WriteLine("4. Vypiš všechny látky");
             Console.WriteLine("5. Odeber látku z katalogu podle ID látky");
             Console.WriteLine("6. Ukonči program");
+        }
+
+        private static void NaseedujDefaultniData(KatalogLatek katalog)
+        {
+            // Defaultní přidání látek 
+            // Softshell
+            katalog.PridejLatku(new Softshell(
+                nazev: "Softshell červneý",
+                barva: Barva.Fialová,
+                kategorie: Softshell.Kategorie.Jarní,
+                slozeni: "100% polyester",
+                gramaz: 260,
+                cena: 199,
+                zasoba: 10,
+                certifikat: true,
+                vodniSloupec: 8000
+            ));
+
+            // Bavlněné plátno
+            katalog.PridejLatku(new BavlnenePlatno(
+                nazev: "Plátno s pruhy",
+                barva: Barva.Bílá,
+                kategorie: BavlnenePlatno.Kategorie.Popelín,
+                slozeni: "100% bavlna",
+                gramaz: 120,
+                cena: 99,
+                zasoba: 5,
+                certifikat: false,
+                srazlivost: 3
+            ));
+
+            // Úplet
+            katalog.PridejLatku(new Uplet(
+                nazev: "Úplet s jednorožci",
+                barva: Barva.Vícebarevná,
+                kategorie: Uplet.Kategorie.Teplákovina,
+                slozeni: "95% bavlna, 5% elastan",
+                gramaz: 160,
+                cena: 199,
+                zasoba: 12,
+                certifikat: true,
+                pruznost: 5
+            ));
+
+            // Uložení naseedovaných defaultních dat do katalogu
+            katalog.UlozKatalogLatek();
+            Console.WriteLine("Katalog neobsahuje žádná data. Výchozí data byla přidána do katalogu.");
         }
     }
 }

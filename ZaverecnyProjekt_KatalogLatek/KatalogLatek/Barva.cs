@@ -2,17 +2,17 @@
 {
     public enum Barva
     {
-        Bila,
-        Zluta,
-        Oranzova,
-        Cervena,
-        Fialova,
-        Ruzova,
-        Modra,
-        Zelena,
-        Hneda,
-        Cerna,
-        Seda,
-        Vicebarevna
+        Bílá,
+        Žlutá,
+        Oranžová,
+        Červená,
+        Fialová,
+        Růžová,
+        Modrá,
+        Zelená,
+        Hnědá,
+        Černá,
+        Šedá,
+        Vícebarevná
     }
 }

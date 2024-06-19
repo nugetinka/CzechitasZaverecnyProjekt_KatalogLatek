@@ -1,6 +1,7 @@
 ﻿using System.Xml.Serialization;
 
 namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
+
 {
     public class Softshell : Latka
     {
@@ -10,9 +11,9 @@ namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
         [XmlType("KategorieSoftshell")]
         public enum Kategorie
         {
-            Jarni,
-            Letni,
-            Zimni,
+            Jarní,
+            Letní,
+            Zimní,
             SFleecem
         }
 
@@ -29,7 +30,7 @@ namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
         public override string ToString()
         {
             return base.ToString() +
-            $"\nVodni sloupec: {VodniSloupec} mm, " +
+            $"\nVodní sloupec: {VodniSloupec} mm, " +
             $"\nKategorie: {KategorieSoftshell}";
         }
     }

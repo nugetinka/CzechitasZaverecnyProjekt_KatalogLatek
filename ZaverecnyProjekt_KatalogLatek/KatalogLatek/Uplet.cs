@@ -1,18 +1,19 @@
 ﻿using System.Xml.Serialization;
 
 namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
+
 {
     public class Uplet : Latka
     {
         public int Pruznost { get; set; }
         public Kategorie KategorieUplet { get; set; }
 
-        [XmlType("KategorieUplet")]
+        [XmlType("KategorieÚplet")]
         public enum Kategorie
         {
-            Uplet,
-            Naplet,
-            Teplakovina
+            Úplet,
+            N8plet,
+            Teplákovina
         }
 
         // Bezparametrový konstruktor
@@ -28,7 +29,7 @@ namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
         public override string ToString()
         {
             return base.ToString() +
-            $"\nPruznost: {Pruznost} %, " +
+            $"\nPružnost: {Pruznost} %, " +
             $"\nKategorie: {KategorieUplet}";
         }
     }

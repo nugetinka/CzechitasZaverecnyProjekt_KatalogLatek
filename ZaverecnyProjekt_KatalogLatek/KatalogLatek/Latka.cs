@@ -1,4 +1,5 @@
 ﻿namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
+
 {
     public abstract class Latka
     {

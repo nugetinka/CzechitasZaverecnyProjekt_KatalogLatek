@@ -7,12 +7,12 @@ namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
         public int Srazlivost { get; set; }
         public Kategorie KategoriePlatno { get; set; }
 
-        [XmlType("KategoriePlatno")]
+        [XmlType("KategoriePlátno")]
         public enum Kategorie
         {
-            Platno,
-            Popelin,
-            Kosilovina,
+            Plátno,
+            Popelín,
+            Košilovina,
             Kanfas
         }
 
@@ -29,7 +29,7 @@ namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
         public override string ToString()
         {
             return base.ToString() +
-            $"\nSrazlivost: {Srazlivost} %, " +
+            $"\nSrážlivost: {Srazlivost} %, " +
             $"\nKategorie: {KategoriePlatno}";
         }
     }

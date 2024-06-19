@@ -1,6 +1,7 @@
 ﻿using System.Xml.Serialization;
 
 namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
+
 {
     public class KatalogLatek
     {
@@ -11,24 +12,43 @@ namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
             Latky = new List<Latka>();
         }
 
+        public enum TypLatky
+        {
+            Platno,
+            Softshell,
+            Uplet
+        }
+
         public void PridejLatku(Latka latka)
         {
             Latky.Add(latka);
+            // Uložení katalogu po přidání látky
             UlozKatalogLatek();
         }
 
         public void OdeberLatku(int kodProduktu)
         {
-            var latkaKOdstraneni = Latky.FirstOrDefault(latka => latka.Id == kodProduktu);
-            if (latkaKOdstraneni != null)
+            try
             {
-                Latky.Remove(latkaKOdstraneni);
-                Console.WriteLine($"Látka s kódem = {kodProduktu} byla odstraněna.");
-                UlozKatalogLatek();
+                // Načtení aktuálního katalogu ze souboru
+                NactiKatalogLatek();
+
+                var latkaKOdstraneni = Latky.FirstOrDefault(l => l.Id == kodProduktu);
+
+                if (latkaKOdstraneni != null)
+                {
+                    Latky.Remove(latkaKOdstraneni);
+                    Console.WriteLine($"Látka s kódem = {kodProduktu} byla odstraněna.");
+                    UlozKatalogLatek();
+                }
+                else
+                {
+                    Console.WriteLine($"Látka s kódem = {kodProduktu} nebyla nalezena.");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine($"Látka s kódem = {kodProduktu} nebyla nalezena.");
+                Console.WriteLine ($"Nastala chyba při aktualizaci katalogu {ex.Message}");
             }
         }
 
@@ -46,11 +66,7 @@ namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
         {
             string nazev = ZiskejStringOdUzivatele("Zadejte název: ");
 
-            if (!Enum.TryParse(ZiskejStringOdUzivatele("Zadejte barvu: "), out Barva barva))
-            {
-                Console.WriteLine("Tato barva není v seznamu.");
-                return;
-            }
+            Barva barva = ZiskejBarvuOdUzivatele("Zadejte barvu: ");
 
             string slozeni = ZiskejStringOdUzivatele("Zadejte složení: ");
 
@@ -67,32 +83,17 @@ namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
             {
                 case TypLatky.Platno:
                     int srazlivost = ZiskejIntOdUzivatele("Zadejte srážlivost (%): ");
-
-                    if (!Enum.TryParse(ZiskejStringOdUzivatele("Zadejte kategorii: "), out BavlnenePlatno.Kategorie kategoriePlatno))
-                    {
-                        Console.WriteLine("Tato kategorie není v seznamu.");
-                        return;
-                    }
+                    var kategoriePlatno = ZiskejKategoriiOdUzivatelePlatno("Zadejte kategorii: ");
                     latka = new BavlnenePlatno(nazev, barva, kategoriePlatno, slozeni, gramaz, cena, zasoba, certifikat, srazlivost);
                     break;
                 case TypLatky.Softshell:
                     int vodniSloupec = ZiskejIntOdUzivatele("Zadejte vodní sloupec (mm): ");
-
-                    if (!Enum.TryParse(ZiskejStringOdUzivatele("Zadejte kategorii: "), out Softshell.Kategorie kategorieSoftshell))
-                    {
-                        Console.WriteLine("Tato kategorie není v seznamu.");
-                        return;
-                    }
+                    var kategorieSoftshell = ZiskejKategoriiOdUzivateleSoftshell("Zadejte kategorii: ");
                     latka = new Softshell(nazev, barva, kategorieSoftshell, slozeni, gramaz, cena, zasoba, certifikat, vodniSloupec);
                     break;
                 case TypLatky.Uplet:
                     int pruznost = ZiskejIntOdUzivatele("Zadejte pružnost (%): ");
-
-                    if (!Enum.TryParse(ZiskejStringOdUzivatele("Zadejte kategorii: "), out Uplet.Kategorie kategorieUplet))
-                    {
-                        Console.WriteLine("Tato kategorie není v seznamu.");
-                        return;
-                    }
+                    var kategorieUplet = ZiskejKategoriiOdUzivateleUplet("Zadejte kategorii: ");
                     latka = new Uplet(nazev, barva, kategorieUplet, slozeni, gramaz, cena, zasoba, certifikat, pruznost);
                     break;
                 default:
@@ -102,13 +103,6 @@ namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
 
             PridejLatku(latka);
             Console.WriteLine($"Látka byla úspěšně přidána.");
-        }
-
-        public enum TypLatky
-        {
-            Platno,
-            Softshell,
-            Uplet
         }
 
         private static string ZiskejStringOdUzivatele(string zadani)
@@ -128,7 +122,7 @@ namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
             return hodnota;
         }
 
-        private static int ZiskejIntOdUzivatele(string zadani)
+        public static int ZiskejIntOdUzivatele(string zadani)
         {
             int hodnota;
             Console.WriteLine(zadani);
@@ -145,9 +139,49 @@ namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
             Console.WriteLine(zadani);
             while (!bool.TryParse(Console.ReadLine(), out hodnota))
             {
-                Console.WriteLine("Zadána neplatná hodnota pro certifikát.");
+                Console.WriteLine("Neplatná hodnota pro certifikát, zadejte znovu: ");
             }
             return hodnota;
+        }
+
+        private static Barva ZiskejBarvuOdUzivatele(string zadani)
+        {
+            Barva barva;
+            while (!Enum.TryParse(ZiskejStringOdUzivatele(zadani), out barva))
+            {
+                Console.WriteLine("Tato barva není v seznamu, zadejte znovu: ");
+            }
+            return barva;
+        }
+
+        private static BavlnenePlatno.Kategorie ZiskejKategoriiOdUzivatelePlatno(string zadani)
+        {
+            BavlnenePlatno.Kategorie kategorie;
+            while (!Enum.TryParse(ZiskejStringOdUzivatele(zadani), out kategorie))
+            {
+                Console.WriteLine("Neplatná kategorie, zadejte znovu: ");
+            }
+            return kategorie;
+        }
+
+        private static Softshell.Kategorie ZiskejKategoriiOdUzivateleSoftshell(string zadani)
+        {
+            Softshell.Kategorie kategorie;
+            while (!Enum.TryParse(ZiskejStringOdUzivatele(zadani), out kategorie))
+            {
+                Console.WriteLine("Neplatná kategorie, zadejte znovu: ");
+            }
+            return kategorie;
+        }
+
+        private static Uplet.Kategorie ZiskejKategoriiOdUzivateleUplet(string zadani)
+        {
+            Uplet.Kategorie kategorie;
+            while (!Enum.TryParse(ZiskejStringOdUzivatele(zadani), out kategorie))
+            {
+                Console.WriteLine("Neplatná kategorie, zadejte znovu: ");
+            }
+            return kategorie;
         }
 
         private string ZiskejCestuKeSlozce()
@@ -167,7 +201,7 @@ namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
             try
             {
                 // Vytvoříme si XmlSerializer na typ List<Latka>
-                XmlSerializer serializer = new XmlSerializer(typeof(List<Latka>), new Type[] {typeof(BavlnenePlatno), typeof(Softshell), typeof(Uplet)});
+                XmlSerializer serializer = new XmlSerializer(typeof(List<Latka>), new Type[] { typeof(BavlnenePlatno), typeof(Softshell), typeof(Uplet) });
 
                 string cestaKeSlozce = ZiskejCestuKeSlozce();
                 string cestaKXmlSouboru = ZiskejCestuKSouboru();
@@ -193,32 +227,46 @@ namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
 
         public List<Latka> NactiKatalogLatek()
         {
-            List<Latka> prectenySeznam = null;
-
             try
             {
                 string cestaKXmlSouboru = ZiskejCestuKSouboru();
 
-                if (!File.Exists(cestaKXmlSouboru))
+                if (File.Exists(cestaKXmlSouboru))
                 {
-                    Console.WriteLine($"Soubor \"katalogLatek.xml\" neexistuje.");
+                    // Vytvoření XML serializátoru na typ List<Latka>
+                    XmlSerializer serializer = new XmlSerializer(typeof(List<Latka>), new Type[] { typeof(BavlnenePlatno), typeof(Softshell), typeof(Uplet) });
+
+                    // Použití StreamReaderu k načtení ze souboru
+                    using (StreamReader streamReader = new StreamReader(cestaKXmlSouboru))
+                    {
+                        Latky = serializer.Deserialize(streamReader) as List<Latka>;
+                    }
+
+                    Console.WriteLine("Katalog byl úspěšně načten z XML souboru");
+
+                    // Nastavení ID pro nové položky
+                    if (Latky.Any())
+                    {
+                        Latka.NastavNavazujiciId(Latky.Max(l => l.Id));
+                    }
+                    else
+                    {
+                        Latka.NastavNavazujiciId(0);
+                    }
                 }
-
-                XmlSerializer serializer = new XmlSerializer(typeof(List<Latka>), new Type[] { typeof(BavlnenePlatno), typeof(Softshell), typeof(Uplet) });
-
-                using (StreamReader streamReader = new StreamReader(cestaKXmlSouboru))
+                else
                 {
-                    prectenySeznam = serializer.Deserialize(streamReader) as List<Latka>;
+                    Console.WriteLine("Soubor s katalogem neexistuje. Nový katalog se vytvoří s defaultními daty.");
+                    //Latky = new List<Latka>();
+                    //Latka.NastavNavazujiciId(0);
                 }
-                Console.WriteLine("Katalog byl úspěšně načten z XML souboru");
-
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Katalog se nepodařilo načíst: {ex.Message}");
+                Console.WriteLine($"Chyba při načítání katalogu: {ex.Message}");
             }
 
-            return prectenySeznam;
+            return Latky;
         }
     }
 }
