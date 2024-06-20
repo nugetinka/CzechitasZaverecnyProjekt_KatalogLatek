@@ -12,7 +12,7 @@
 
             if (prectenyKatalog != null && prectenyKatalog.Any())
             {
-                // Tato část kodu se vykoná jen pokud prectenyKatalog není null a obsahuje alespon jeden prvek
+                // Vykonání následující části kódu, pokud prectenyKatalog není null a obsahuje alespon jeden prvek
                 foreach (var latka in prectenyKatalog)
                 {
                     Console.WriteLine(latka);
@@ -37,33 +37,39 @@
                 ZobrazUzivatelskeRozhrani();
                 if (!int.TryParse(Console.ReadLine(), out int volba))
                 {
-                    Console.WriteLine("Neplatný výběr, zadej volbu znovu: ");
+                    Console.WriteLine("Neplatný výběr, zadejte volbu znovu: ");
+                    continue;
                 }
 
                 switch (volba)
                 {
-                    case 1: // přidej plátno
-                        katalog.PridejLatku(KatalogLatek.TypLatky.Platno);
+                    case 1: // Přidání plátna
+                        katalog.PridejLatku(KatalogLatek.TypLatky.Plátno);
                         break; ;
-                    case 2: // přidej softshell
+                    case 2: // Přidání softshellu
                         katalog.PridejLatku(KatalogLatek.TypLatky.Softshell);
                         break;
-                    case 3: // přidej úplet
-                        katalog.PridejLatku(KatalogLatek.TypLatky.Uplet);
+                    case 3: // Přidání úpletu
+                        katalog.PridejLatku(KatalogLatek.TypLatky.Úplet);
                         break;
-                    case 4: // vypiš látky
-                        katalog.ToString();
+                    case 4: // Vypsání látek
+                        Console.WriteLine(katalog.ToString());
+                        Console.WriteLine("Stiskněte libovolnou klávesu pro pokračování...");
+                        Console.ReadLine();
                         break;
-                    case 5:
+                    case 5: // Odebrání látky podle ID
                         int kodProduktu = KatalogLatek.ZiskejIntOdUzivatele("Zadejte ID/kód produktu, který má být odstraněn." );
                         katalog.OdeberLatku(kodProduktu);
-                        break;
-                    case 6:
+                        break; 
+                    //case 6: // Filtrování
+                    //    FiltrujAVypisLatkyPodleTypu(katalog);
+                    //    break;
+                    case 7: // Ukončení programu
                         ukoncitProgram = true;
                         katalog.UlozKatalogLatek();
                         break;
                     default:
-                        Console.WriteLine("Neplatný výběr, zadej volbu znovu: ");
+                        Console.WriteLine("Neplatný výběr, zadejte volbu znovu: ");
                         break;
                 }
             }
@@ -71,14 +77,14 @@
 
         public static void ZobrazUzivatelskeRozhrani()
         {
-            Console.WriteLine("Katalog látek - zvolte jednu z následujících možností:");
+            Console.WriteLine("KATALOG LÁTEK - zvolte jednu z následujících možností:");
             Console.WriteLine();
-            Console.WriteLine("1. Přidej bavlněné plátno");
-            Console.WriteLine("2. Přidej softshell");
-            Console.WriteLine("3. Přidej úplet");
-            Console.WriteLine("4. Vypiš všechny látky");
-            Console.WriteLine("5. Odeber látku z katalogu podle ID látky");
-            Console.WriteLine("6. Ukonči program");
+            Console.WriteLine("1. Přidání bavlněného plátna");
+            Console.WriteLine("2. Přidání softshellu");
+            Console.WriteLine("3. Přidání úpletu");
+            Console.WriteLine("4. Vypsání všech látek");
+            Console.WriteLine("5. Odebrání látek z katalogu podle ID látky");
+            Console.WriteLine("7. Ukončení programu");
         }
 
         private static void NaseedujDefaultniData(KatalogLatek katalog)
@@ -125,7 +131,7 @@
 
             // Uložení naseedovaných defaultních dat do katalogu
             katalog.UlozKatalogLatek();
-            Console.WriteLine("Katalog neobsahuje žádná data. Výchozí data byla přidána do katalogu.");
+            Console.WriteLine("Výchozí data byla přidána do katalogu.");
         }
     }
 }

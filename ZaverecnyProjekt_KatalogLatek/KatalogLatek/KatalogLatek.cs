@@ -14,9 +14,9 @@ namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
 
         public enum TypLatky
         {
-            Platno,
+            Plátno,
             Softshell,
-            Uplet
+            Úplet
         }
 
         public void PridejLatku(Latka latka)
@@ -48,12 +48,16 @@ namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
             }
             catch (Exception ex)
             {
-                Console.WriteLine ($"Nastala chyba při aktualizaci katalogu {ex.Message}");
+                Console.WriteLine($"Nastala chyba při aktualizaci katalogu {ex.Message}.");
             }
         }
 
         public override string ToString()
         {
+            if (Latky.Count == 0)
+            {
+                Console.WriteLine($"Katalog je prázdný.");
+            }
             foreach (var latka in Latky)
             {
                 Console.WriteLine(latka.ToString());
@@ -62,7 +66,7 @@ namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
             return string.Empty;
         }
 
-        public void PridejLatku(TypLatky volba)
+        public void PridejLatku(TypLatky typLatky)
         {
             string nazev = ZiskejStringOdUzivatele("Zadejte název: ");
 
@@ -79,9 +83,9 @@ namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
             bool certifikat = ZiskejBoolOdUzivatele("Je produkt certifikován (true/false)?");
 
             Latka latka;
-            switch (volba)
+            switch (typLatky)
             {
-                case TypLatky.Platno:
+                case TypLatky.Plátno:
                     int srazlivost = ZiskejIntOdUzivatele("Zadejte srážlivost (%): ");
                     var kategoriePlatno = ZiskejKategoriiOdUzivatelePlatno("Zadejte kategorii: ");
                     latka = new BavlnenePlatno(nazev, barva, kategoriePlatno, slozeni, gramaz, cena, zasoba, certifikat, srazlivost);
@@ -91,13 +95,13 @@ namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
                     var kategorieSoftshell = ZiskejKategoriiOdUzivateleSoftshell("Zadejte kategorii: ");
                     latka = new Softshell(nazev, barva, kategorieSoftshell, slozeni, gramaz, cena, zasoba, certifikat, vodniSloupec);
                     break;
-                case TypLatky.Uplet:
+                case TypLatky.Úplet:
                     int pruznost = ZiskejIntOdUzivatele("Zadejte pružnost (%): ");
                     var kategorieUplet = ZiskejKategoriiOdUzivateleUplet("Zadejte kategorii: ");
                     latka = new Uplet(nazev, barva, kategorieUplet, slozeni, gramaz, cena, zasoba, certifikat, pruznost);
                     break;
                 default:
-                    Console.WriteLine("Neznámý typ látky");
+                    Console.WriteLine("Neznámý typ látky.");
                     return;
             }
 
@@ -211,11 +215,10 @@ namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
                     Directory.CreateDirectory(cestaKeSlozce);
                 }
 
-                // Vytvoříme stream, pomocí kterého budeme serializovat
+                // Vytvoření streamu, pomocí kterého budeme serializovat
                 using (StreamWriter streamWriter = new StreamWriter(cestaKXmlSouboru))
                 {
-                    // Zavoláme metodu Serialize, kde je první parametr stream
-                    // Druhý parametr je objekt, který serializujeme
+                    // Zavolání metody Serialize, kde je první parametr stream a druhý je objekt, který serializujeme
                     serializer.Serialize(streamWriter, Latky);
                 }
             }
@@ -241,31 +244,17 @@ namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
                     {
                         Latky = serializer.Deserialize(streamReader) as List<Latka>;
                     }
-
-                    Console.WriteLine("Katalog byl úspěšně načten z XML souboru");
-
-                    // Nastavení ID pro nové položky
-                    if (Latky.Any())
-                    {
-                        Latka.NastavNavazujiciId(Latky.Max(l => l.Id));
-                    }
-                    else
-                    {
-                        Latka.NastavNavazujiciId(0);
-                    }
                 }
                 else
                 {
-                    Console.WriteLine("Soubor s katalogem neexistuje. Nový katalog se vytvoří s defaultními daty.");
-                    //Latky = new List<Latka>();
-                    //Latka.NastavNavazujiciId(0);
+                    Console.WriteLine("Katalog látek nebyl nalezen, bude vytvořen nový.");
+                    return new List<Latka>();
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Chyba při načítání katalogu: {ex.Message}");
             }
-
             return Latky;
         }
     }

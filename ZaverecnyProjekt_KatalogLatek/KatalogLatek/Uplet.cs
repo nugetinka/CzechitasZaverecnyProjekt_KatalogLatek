@@ -12,7 +12,7 @@ namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
         public enum Kategorie
         {
             Úplet,
-            N8plet,
+            Náplet,
             Teplákovina
         }
 

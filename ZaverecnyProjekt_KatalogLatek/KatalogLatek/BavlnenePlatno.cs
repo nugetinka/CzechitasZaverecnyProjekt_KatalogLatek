@@ -1,6 +1,7 @@
 ﻿using System.Xml.Serialization;
 
 namespace ZaverecnyProjekt_KatalogLatek.KatalogLatek
+
 {
     public class BavlnenePlatno : Latka
     {
