@@ -61,10 +61,7 @@
                         int kodProduktu = KatalogLatek.ZiskejIntOdUzivatele("Zadejte ID/kód produktu, který má být odstraněn." );
                         katalog.OdeberLatku(kodProduktu);
                         break; 
-                    //case 6: // Filtrování
-                    //    FiltrujAVypisLatkyPodleTypu(katalog);
-                    //    break;
-                    case 7: // Ukončení programu
+                    case 6: // Ukončení programu
                         ukoncitProgram = true;
                         katalog.UlozKatalogLatek();
                         break;
@@ -84,7 +81,7 @@
             Console.WriteLine("3. Přidání úpletu");
             Console.WriteLine("4. Vypsání všech látek");
             Console.WriteLine("5. Odebrání látek z katalogu podle ID látky");
-            Console.WriteLine("7. Ukončení programu");
+            Console.WriteLine("6. Ukončení programu");
         }
 
         private static void NaseedujDefaultniData(KatalogLatek katalog)
