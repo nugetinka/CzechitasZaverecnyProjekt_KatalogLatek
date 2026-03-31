@@ -121,7 +121,7 @@
                 slozeni: "95% bavlna, 5% elastan",
                 gramaz: 160,
                 cena: 199,
-                zasoba: 12,
+                zasoba: 13,
                 certifikat: true,
                 pruznost: 5
             ));
